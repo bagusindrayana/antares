@@ -31,4 +31,12 @@ export default class {
    static unregisterShortcuts () {
       return ipcRenderer.invoke('unregister-shortcuts');
    }
+
+   static readFile (path: string): Promise<string> {
+      return ipcRenderer.invoke('read-file', path);
+   }
+
+   static writeFile (path: string,content:any) {
+      return ipcRenderer.invoke('write-file', path, content);
+   }
 }
