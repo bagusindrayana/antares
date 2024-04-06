@@ -8,6 +8,10 @@ export default class {
       return ipcRenderer.invoke('show-open-dialog', unproxify(options));
    }
 
+   static showSaveDialog (options: OpenDialogOptions): Promise<OpenDialogReturnValue> {
+      return ipcRenderer.invoke('show-save-dialog', unproxify(options));
+   }
+
    static getDownloadPathDirectory (): Promise<string> {
       return ipcRenderer.invoke('get-download-dir-path');
    }
