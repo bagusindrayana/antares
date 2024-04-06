@@ -52,6 +52,11 @@ export default () => {
       return dialog.showOpenDialog(options);
    });
 
+   ipcMain.handle('show-save-dialog', (event, options) => {
+      if (!validateSender(event.senderFrame)) return { status: 'error', response: 'Unauthorized process' };
+      return dialog.showSaveDialog(options);
+   });
+
    ipcMain.handle('get-download-dir-path', (event) => {
       if (!validateSender(event.senderFrame)) return { status: 'error', response: 'Unauthorized process' };
       return app.getPath('downloads');
