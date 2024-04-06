@@ -1,8 +1,10 @@
 import { app, dialog, ipcMain, safeStorage } from 'electron';
 import * as Store from 'electron-store';
+import * as fs from 'fs';
 
 import { validateSender } from '../libs/misc/validateSender';
 import { ShortcutRegister } from '../libs/ShortcutRegister';
+
 
 export default () => {
    ipcMain.on('close-app', (event) => {
@@ -84,5 +86,27 @@ export default () => {
       if (!validateSender(event.senderFrame)) return { status: 'error', response: 'Unauthorized process' };
       const shortCutRegister = ShortcutRegister.getInstance();
       shortCutRegister.unregister();
+   });
+
+   ipcMain.handle('read-file', (event, filePath) => {
+      if (!validateSender(event.senderFrame)) return { status: 'error', response: 'Unauthorized process' };
+      try {
+         const content = fs.readFileSync(filePath, 'utf-8');
+         return content;
+      }
+      catch (error) {
+         return { status: 'error', response: error.toString() };
+      }
+   });
+
+   ipcMain.handle('write-file', (event, filePath, content) => {
+      if (!validateSender(event.senderFrame)) return { status: 'error', response: 'Unauthorized process' };
+      try {
+         fs.writeFileSync(filePath, content, 'utf-8');
+         return { status: 'success' };
+      }
+      catch (error) {
+         return { status: 'error', response: error.toString() };
+      }
    });
 };
