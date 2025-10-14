@@ -90,7 +90,9 @@
       "license": "./LICENSE",
       "installerIcon": "assets/icon.ico",
       "uninstallerIcon": "assets/icon.ico",
-      "installerHeader": "assets/icon.ico"
+      "installerHeader": "assets/icon.ico",
+      "oneClick": false,
+      "perMachine": false
     },
     "portable": {
       "artifactName": "${productName}-${version}-portable.exe"
